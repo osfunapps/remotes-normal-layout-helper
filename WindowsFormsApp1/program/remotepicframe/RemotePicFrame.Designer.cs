@@ -67,7 +67,7 @@ namespace WindowsFormsApp1.program.example
             this.FormClosing += new FormClosingEventHandler(this.onFormClosing);
             this.Shown += new EventHandler(this.FormShown);
             this.PerformLayout();
-
+             
         }
 
         #endregion
