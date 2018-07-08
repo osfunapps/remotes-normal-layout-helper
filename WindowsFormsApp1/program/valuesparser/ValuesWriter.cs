@@ -88,6 +88,7 @@ namespace LayoutProject.program
 
             if (LastElement())
             {
+                remotePicFrame.OnDone();
                 new RemoteDimensHandler().SetRemoteDimens(xmlDocument, remotePicFrame.GetRemotePic());
                 valuesWriterCallback.OnWritingEnd(xmlDocument);
                 return;
@@ -129,8 +130,8 @@ namespace LayoutProject.program
 
         public void OnBtnUndo()
         {
-            if (nodesIndexer == 0) return;
-            nodesIndexer--;
+            if (nodesIndexer != 0)
+                nodesIndexer--;
             this.currentRectNode = rectNodesList[nodesIndexer];
 
             XmlAttributeCollection attributesList = currentRectNode.Attributes;
@@ -139,6 +140,7 @@ namespace LayoutProject.program
                 if (att.Name == "name") continue;
                 att.Value = XMLPreparer.VAL_PLACE_HOLDER;
             }
+            remotePicFrame.ClearLastRect();
             CheckNextVal();
         }
     }

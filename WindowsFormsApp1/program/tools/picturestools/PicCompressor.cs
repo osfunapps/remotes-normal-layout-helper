@@ -1,49 +1,35 @@
 ﻿using System;
-using System.Diagnostics;
-using System.IO;
+using System.Threading.Tasks;
 using System.Windows.Forms;
-using WindowsFormsApp1.Properties;
+using TinifyAPI;
 
-namespace LayoutProject
+namespace WindowsFormsApp1.program.tools.picturestools
 {
     internal class PicCompressor
     {
+        private readonly IPicCompressor _callback;
 
-
-        private string pythonScript = "\"" + Directory.GetCurrentDirectory() + "\\" + "TinyPngExe.py\"";
-        private string COMPRESS_SUFIX = "_compressed";
-
-        public void compressPic(string pythonPath, string apiKey, string picInput)
+        public PicCompressor(IPicCompressor callback)
         {
-            apiKey = FormatString(apiKey);
-            picInput = FormatString(picInput);
-            //string picOutput = picInput.Insert(picInput.LastIndexOf("."), COMPRESS_SUFIX);
-
-            RunCmd(pythonPath, pythonScript, apiKey + picInput + picInput);
-            //RunCmd(pythonPath, PYTHON_SCRIPT, apiKey + picInput + picInput);
-
+            _callback = callback;
+            
         }
 
-        private static void RunCmd(string pythonPath, string cmd, string args)
+        public void SetApiKey(string apiKey)
         {
-            ProcessStartInfo start = new ProcessStartInfo();
-            start.FileName = pythonPath;
-            start.Arguments = cmd + args;
-            start.UseShellExecute = false;
-            start.RedirectStandardOutput = true;
-            using (Process process = Process.Start(start))
-            {
-                using (StreamReader reader = process.StandardOutput)
-                {
-                    string result = reader.ReadToEnd();
-                    MessageBox.Show(result);
-                }
-            }
+            Tinify.Key = apiKey;
         }
 
-        private string FormatString(string inputStr)
+        public async Task CompressPic(string picPath)
         {
-            return " \"" + inputStr + "\"";
+            var source = Tinify.FromFile(picPath);
+            await source.ToFile(picPath);
+            _callback.OnCompressionDone(picPath);
         }
+    }
+
+    public interface IPicCompressor
+    {
+        void OnCompressionDone(string picPath);
     }
 }

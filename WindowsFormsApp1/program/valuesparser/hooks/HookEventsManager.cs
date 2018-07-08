@@ -46,20 +46,32 @@ namespace WindowsFormsApp1.program.valuesparser.hooks
             MouseWatcher.Stop();
             userAcitonCallback.OnBtnUndo();
             Console.WriteLine("undo!");
+            //UnblockUndo(5000);
+        }
+
+        private void UnblockUndo(int i)
+        {
+            Thread.Sleep(i);
+            undoed = !undoed;
         }
 
         private void Validated(IUserActionCallback validationCallback)
         {
             validated = true;
             Console.WriteLine("validated!");
-            KeyboardWatcher.Stop();
-            MouseWatcher.Stop();
+            //KeyboardWatcher.Stop();
+            //MouseWatcher.Stop();
             validationCallback.OnBtnValidated();
         }
 
         public interface IUserActionCallback { 
             void OnBtnValidated();
             void OnBtnUndo();
+        }
+
+        public void OnDone()
+        {
+            validated = true;
         }
     }
 

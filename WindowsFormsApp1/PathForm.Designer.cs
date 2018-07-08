@@ -10,7 +10,7 @@ namespace LayoutProject
         /// Required designer variable.
         /// </summary>
         private System.ComponentModel.IContainer components = null;
-        private Initiator initiator;
+        
     
         /// <summary>
         /// Clean up any resources being used.
@@ -46,28 +46,25 @@ namespace LayoutProject
             this.AvBtnCB = new System.Windows.Forms.CheckBox();
             this.TvVolUpCB = new System.Windows.Forms.CheckBox();
             this.TvVolDownCB = new System.Windows.Forms.CheckBox();
-            this.label2 = new System.Windows.Forms.Label();
             this.muteBtnCB = new System.Windows.Forms.CheckBox();
             this.validationCB = new System.Windows.Forms.ComboBox();
             this.label3 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
             this.startOverCB = new System.Windows.Forms.CheckBox();
             this.linkLabel1 = new System.Windows.Forms.LinkLabel();
             this.removeTvKeysCB = new System.Windows.Forms.CheckBox();
             this.tinyPngCompressionCB = new System.Windows.Forms.CheckBox();
             this.tinyPngCB = new System.Windows.Forms.GroupBox();
-            this.button1 = new System.Windows.Forms.Button();
             this.label5 = new System.Windows.Forms.Label();
             this.apiKeyTB = new System.Windows.Forms.TextBox();
-            this.label6 = new System.Windows.Forms.Label();
-            this.pythonPathTB = new System.Windows.Forms.TextBox();
             this.pythonPathDialog = new System.Windows.Forms.OpenFileDialog();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.tinyPngCB.SuspendLayout();
+            this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
             // goBtn
             // 
-            this.goBtn.Location = new System.Drawing.Point(214, 418);
+            this.goBtn.Location = new System.Drawing.Point(214, 379);
             this.goBtn.Name = "goBtn";
             this.goBtn.Size = new System.Drawing.Size(75, 37);
             this.goBtn.TabIndex = 0;
@@ -149,7 +146,7 @@ namespace LayoutProject
             this.TvPowerCB.AutoSize = true;
             this.TvPowerCB.Checked = true;
             this.TvPowerCB.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.TvPowerCB.Location = new System.Drawing.Point(86, 107);
+            this.TvPowerCB.Location = new System.Drawing.Point(39, 24);
             this.TvPowerCB.Name = "TvPowerCB";
             this.TvPowerCB.Size = new System.Drawing.Size(107, 17);
             this.TvPowerCB.TabIndex = 7;
@@ -161,7 +158,7 @@ namespace LayoutProject
             this.AvBtnCB.AutoSize = true;
             this.AvBtnCB.Checked = true;
             this.AvBtnCB.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.AvBtnCB.Location = new System.Drawing.Point(86, 130);
+            this.AvBtnCB.Location = new System.Drawing.Point(39, 55);
             this.AvBtnCB.Name = "AvBtnCB";
             this.AvBtnCB.Size = new System.Drawing.Size(94, 17);
             this.AvBtnCB.TabIndex = 8;
@@ -173,7 +170,7 @@ namespace LayoutProject
             this.TvVolUpCB.AutoSize = true;
             this.TvVolUpCB.Checked = true;
             this.TvVolUpCB.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.TvVolUpCB.Location = new System.Drawing.Point(214, 107);
+            this.TvVolUpCB.Location = new System.Drawing.Point(167, 19);
             this.TvVolUpCB.Name = "TvVolUpCB";
             this.TvVolUpCB.Size = new System.Drawing.Size(129, 17);
             this.TvVolUpCB.TabIndex = 9;
@@ -185,28 +182,19 @@ namespace LayoutProject
             this.TvVolDownCB.AutoSize = true;
             this.TvVolDownCB.Checked = true;
             this.TvVolDownCB.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.TvVolDownCB.Location = new System.Drawing.Point(214, 130);
+            this.TvVolDownCB.Location = new System.Drawing.Point(167, 55);
             this.TvVolDownCB.Name = "TvVolDownCB";
             this.TvVolDownCB.Size = new System.Drawing.Size(143, 17);
             this.TvVolDownCB.TabIndex = 10;
             this.TvVolDownCB.Text = "TV Volume Down Button";
             this.TvVolDownCB.UseVisualStyleBackColor = true;
             // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(12, 80);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(98, 13);
-            this.label2.TabIndex = 11;
-            this.label2.Text = "Add These Buttons";
-            // 
             // muteBtnCB
             // 
             this.muteBtnCB.AutoSize = true;
             this.muteBtnCB.Checked = true;
             this.muteBtnCB.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.muteBtnCB.Location = new System.Drawing.Point(366, 107);
+            this.muteBtnCB.Location = new System.Drawing.Point(319, 33);
             this.muteBtnCB.Name = "muteBtnCB";
             this.muteBtnCB.Size = new System.Drawing.Size(84, 17);
             this.muteBtnCB.TabIndex = 12;
@@ -230,16 +218,6 @@ namespace LayoutProject
             this.label3.TabIndex = 14;
             this.label3.Text = "With Validation Button";
             // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.5F);
-            this.label4.Location = new System.Drawing.Point(16, 173);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(50, 13);
-            this.label4.TabIndex = 15;
-            this.label4.Text = "*Optional";
-            // 
             // startOverCB
             // 
             this.startOverCB.AutoSize = true;
@@ -253,7 +231,7 @@ namespace LayoutProject
             // linkLabel1
             // 
             this.linkLabel1.AutoSize = true;
-            this.linkLabel1.Location = new System.Drawing.Point(445, 442);
+            this.linkLabel1.Location = new System.Drawing.Point(406, 403);
             this.linkLabel1.Name = "linkLabel1";
             this.linkLabel1.Size = new System.Drawing.Size(29, 13);
             this.linkLabel1.TabIndex = 17;
@@ -274,7 +252,7 @@ namespace LayoutProject
             // tinyPngCompressionCB
             // 
             this.tinyPngCompressionCB.AutoSize = true;
-            this.tinyPngCompressionCB.Location = new System.Drawing.Point(19, 285);
+            this.tinyPngCompressionCB.Location = new System.Drawing.Point(19, 287);
             this.tinyPngCompressionCB.Name = "tinyPngCompressionCB";
             this.tinyPngCompressionCB.Size = new System.Drawing.Size(147, 17);
             this.tinyPngCompressionCB.TabIndex = 22;
@@ -284,90 +262,66 @@ namespace LayoutProject
             // 
             // tinyPngCB
             // 
-            this.tinyPngCB.Controls.Add(this.button1);
             this.tinyPngCB.Controls.Add(this.label5);
             this.tinyPngCB.Controls.Add(this.apiKeyTB);
-            this.tinyPngCB.Controls.Add(this.label6);
-            this.tinyPngCB.Controls.Add(this.pythonPathTB);
             this.tinyPngCB.Enabled = false;
             this.tinyPngCB.Location = new System.Drawing.Point(14, 310);
             this.tinyPngCB.Name = "tinyPngCB";
-            this.tinyPngCB.Size = new System.Drawing.Size(459, 100);
+            this.tinyPngCB.Size = new System.Drawing.Size(421, 63);
             this.tinyPngCB.TabIndex = 21;
             this.tinyPngCB.TabStop = false;
             this.tinyPngCB.Text = "Pic Compressor";
             // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(378, 24);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 20;
-            this.button1.Text = "Browse...";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
-            // 
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(29, 66);
+            this.label5.Location = new System.Drawing.Point(21, 26);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(45, 13);
             this.label5.TabIndex = 23;
             this.label5.Text = "API Key";
+            this.label5.Click += new System.EventHandler(this.label5_Click);
             // 
             // apiKeyTB
             // 
             this.apiKeyTB.AllowDrop = true;
-            this.apiKeyTB.Location = new System.Drawing.Point(123, 63);
+            this.apiKeyTB.Location = new System.Drawing.Point(123, 26);
             this.apiKeyTB.Name = "apiKeyTB";
             this.apiKeyTB.Size = new System.Drawing.Size(242, 20);
             this.apiKeyTB.TabIndex = 22;
             // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(29, 27);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(65, 13);
-            this.label6.TabIndex = 21;
-            this.label6.Text = "Python Path";
-            // 
-            // pythonPathTB
-            // 
-            this.pythonPathTB.AllowDrop = true;
-            this.pythonPathTB.Location = new System.Drawing.Point(123, 26);
-            this.pythonPathTB.Name = "pythonPathTB";
-            this.pythonPathTB.Size = new System.Drawing.Size(242, 20);
-            this.pythonPathTB.TabIndex = 20;
-            this.pythonPathTB.TextChanged += new System.EventHandler(this.pythonPathTB_TextChanged);
-            this.pythonPathTB.DragDrop += new System.Windows.Forms.DragEventHandler(this.PythonPathDropHandler);
-            this.pythonPathTB.DragEnter += new System.Windows.Forms.DragEventHandler(this.DragEnterHandler);
-            // 
             // pythonPathDialog
             // 
             this.pythonPathDialog.FileName = "pythonPathDialog";
-            this.pythonPathDialog.FileOk += new System.ComponentModel.CancelEventHandler(this.pythonPathDialog_FileOk_1);
+            // 
+            // groupBox1
+            // 
+            this.groupBox1.Controls.Add(this.TvPowerCB);
+            this.groupBox1.Controls.Add(this.AvBtnCB);
+            this.groupBox1.Controls.Add(this.TvVolUpCB);
+            this.groupBox1.Controls.Add(this.TvVolDownCB);
+            this.groupBox1.Controls.Add(this.muteBtnCB);
+            this.groupBox1.Location = new System.Drawing.Point(14, 83);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(421, 87);
+            this.groupBox1.TabIndex = 24;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "Add These Buttons";
+            this.groupBox1.Enter += new System.EventHandler(this.groupBox1_Enter);
             // 
             // PathForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(486, 465);
+            this.ClientSize = new System.Drawing.Size(451, 431);
+            this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.tinyPngCompressionCB);
             this.Controls.Add(this.tinyPngCB);
             this.Controls.Add(this.removeTvKeysCB);
             this.Controls.Add(this.linkLabel1);
             this.Controls.Add(this.startOverCB);
-            this.Controls.Add(this.label4);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.validationCB);
-            this.Controls.Add(this.muteBtnCB);
-            this.Controls.Add(this.label2);
-            this.Controls.Add(this.TvVolDownCB);
-            this.Controls.Add(this.TvVolUpCB);
-            this.Controls.Add(this.AvBtnCB);
-            this.Controls.Add(this.TvPowerCB);
             this.Controls.Add(this.RemotePicBrowseBtn);
             this.Controls.Add(this.XmlBrowseBtn);
             this.Controls.Add(this.label1);
@@ -380,6 +334,8 @@ namespace LayoutProject
             this.Load += new System.EventHandler(this.Form1_Load);
             this.tinyPngCB.ResumeLayout(false);
             this.tinyPngCB.PerformLayout();
+            this.groupBox1.ResumeLayout(false);
+            this.groupBox1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -434,22 +390,18 @@ namespace LayoutProject
         private System.Windows.Forms.CheckBox AvBtnCB;
         private System.Windows.Forms.CheckBox TvVolUpCB;
         private System.Windows.Forms.CheckBox TvVolDownCB;
-        private System.Windows.Forms.Label label2;
         private System.Windows.Forms.CheckBox muteBtnCB;
         private System.Windows.Forms.ComboBox validationCB;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Label label4;
         private CheckBox startOverCB;
         private LinkLabel linkLabel1;
         private CheckBox removeTvKeysCB;
         internal CheckBox tinyPngCompressionCB;
         private GroupBox tinyPngCB;
-        private Button button1;
         private Label label5;
         private TextBox apiKeyTB;
-        private Label label6;
-        private TextBox pythonPathTB;
         private OpenFileDialog pythonPathDialog;
+        private GroupBox groupBox1;
     }
 }
 

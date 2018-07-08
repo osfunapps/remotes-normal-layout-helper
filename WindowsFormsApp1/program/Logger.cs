@@ -7,7 +7,15 @@ namespace LayoutProject
         internal static string GetTxt()
         {
             return
-                "Version 1.9" +
+                "version 2.0" +
+                "\n- added back button in [`]" +
+                "\n- rectangles now stays" +
+                "\n- program now makes logos" +
+                "\n- tiny png works again" +
+                "\n- two remote directories will be made: 300 and 600" +
+                "\n- tiny png changed to support .NET. No more python!" +
+                "\n- tiny png will auto compress the two png files in the two directories" +
+                "\n\nVersion 1.9" +
                 "\n- added mute btn skip" +
                 "\n\nVersion 1.8" +
                 "\n- params will now save " +

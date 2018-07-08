@@ -45,9 +45,6 @@ namespace LayoutProject.program
         {
             xmlDocument.Save(PathForm.GetXmlPath());
             callBack.onFileMade();
-            Console.WriteLine("done!");
-            Application.Exit();
-            Environment.Exit(1);
         }
 
 

@@ -10,13 +10,19 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using WindowsFormsApp1.program;
+using WindowsFormsApp1.program.tools.picturestools;
 using WindowsFormsApp1.Properties;
 
 
 namespace LayoutProject
 {
-    public partial class PathForm : Form, InitiatorCallBack
+    public partial class PathForm : Form, InitiatorCallBack, IPicCompressor
     {
+
+        //instances
+        private PicCompressor picCompressor;
+        private Initiator initiator;
+
         //checkers params
         private static bool removeWrongTvKeys;
         private static string xmlPathStr;
@@ -29,6 +35,7 @@ namespace LayoutProject
         private string path1300;
         private string parentDirName;
         private string file1300Path;
+        private string file600Path;
 
         public PathForm()
         {
@@ -42,7 +49,6 @@ namespace LayoutProject
         private void loadPreviousParams()
         {
             apiKeyTB.Text = Settings.Default.APIKey;
-            pythonPathTB.Text = Settings.Default.pythonPath;
             remotePathTB.Text = Settings.Default.remotePath;
             xmlPathTB.Text = Settings.Default.xmlPath;
             TvPowerCB.Checked = Settings.Default.tvBtn;
@@ -60,6 +66,8 @@ namespace LayoutProject
         private void setInstances()
         {
             initiator = new Initiator(this);
+            picCompressor = new PicCompressor(this);
+
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -143,12 +151,12 @@ namespace LayoutProject
             return validationBtnName;
         }
 
-               public static bool GetRunOver()
+        public static bool GetRunOver()
         {
             return startOver;
         }
 
-              private void LinkLabel1_LinkClicked_1(object sender, LinkLabelLinkClickedEventArgs e)
+        private void LinkLabel1_LinkClicked_1(object sender, LinkLabelLinkClickedEventArgs e)
         {
             MessageBox.Show(Logger.GetTxt());
         }
@@ -156,11 +164,6 @@ namespace LayoutProject
         public static bool RemoveWrongTvKeys { get => removeWrongTvKeys; set => removeWrongTvKeys = value; }
 
         private void XmlPathTB_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void pythonPathTB_TextChanged(object sender, EventArgs e)
         {
 
         }
@@ -173,22 +176,20 @@ namespace LayoutProject
 
         public void onFileMade()
         {
-            if (tinyPngCompressionCB.Checked) CompressPic();
-            ZipCreator.CreateZip(path1300 + "\\" + parentDirName + ".zip", file1300Path, xmlPathStr);
-            Application.Exit();
-            Environment.Exit(1);
+            if (tinyPngCompressionCB.Checked)
+            {
+                picCompressor.SetApiKey(apiKeyTB.Text);
+                MessageBox.Show("click ok to start compression and wait");
+                CompressPic(file600Path);
+            }
+            else
+                ZipCreator.CreateZip(path1300 + "\\" + parentDirName + ".zip", file1300Path, xmlPathStr);
         }
 
-        private void button1_Click(object sender, EventArgs e)
-        {
-            pythonPathDialog.ShowDialog();
-        }
 
-
-        private void CompressPic()
+        private void CompressPic(string picPath)
         {
-            PicCompressor picCompressor = new PicCompressor();
-            picCompressor.compressPic(pythonPathTB.Text, apiKeyTB.Text, path1300);
+            picCompressor.CompressPic(picPath);
         }
 
         private void SaveParams()
@@ -206,43 +207,31 @@ namespace LayoutProject
             Settings.Default.removeTvKeys = removeTvKeysCB.Checked;
             Settings.Default.tinyPng = tinyPngCompressionCB.Checked;
             Settings.Default.APIKey = apiKeyTB.Text;
-            Settings.Default.pythonPath = pythonPathTB.Text;
             Settings.Default.remotePath = remotePathTB.Text;
             Settings.Default.xmlPath = xmlPathTB.Text;
 
             Settings.Default.Save();
         }
 
-        private void PythonPathDropHandler(object sender, DragEventArgs e)
-        {
-            pythonPathTB.Text = ((string[])e.Data.GetData(DataFormats.FileDrop, false))[0];
-
-        }
-
-        private void pythonPathDialog_FileOk_1(object sender, CancelEventArgs e)
-        {
-            pythonPathTB.Text = TitleExporter(sender.ToString());
-
-        }
 
 
         private string CreateResizedImages(string parentDir)
         {
-            
+
             var path1300 = parentDir + "\\1300";
             file1300Path = parentDir + "\\1300" + "\\remote.png";
             var path600 = parentDir + "\\600";
+            file600Path = path600 + "\\" + parentDirName + ".png";
             parentDirName = parentDir.Substring(parentDir.LastIndexOf("\\"));
             if (!Directory.Exists(path1300))
                 Directory.CreateDirectory(path1300);
             if (!Directory.Exists(path600))
                 Directory.CreateDirectory(path600);
             var remote1300Success = PicResizer.ResizeImage(0, 1300, file1300Path, remotePicPath);
-            var remote600Success = PicResizer.ResizeImage(0, 600,  path600 + "\\"+ parentDirName+".png", remotePicPath);
+            var remote600Success = PicResizer.ResizeImage(0, 600, file600Path, remotePicPath);
             if (remote1300Success && remote600Success)
                 return path1300;
-            else
-                return null;
+            return null;
         }
 
 
@@ -256,6 +245,7 @@ namespace LayoutProject
 
         private void Go_Click(object sender, EventArgs e)
         {
+
 
 
             xmlPathStr = xmlPathTB.Text;
@@ -274,7 +264,7 @@ namespace LayoutProject
                     MessageBox.Show("couldn't create resized images! exiting...");
                     return;
                 }
-                
+
                 var logoCreated = CreateLogo(parentDir);
                 if (!logoCreated)
                 {
@@ -283,26 +273,52 @@ namespace LayoutProject
                 }
             }
 
+
             ZipCreator.CreateZip(path1300 + "\\" + parentDirName + ".zip", file1300Path, xmlPathStr);
 
             removeWrongTvKeys = removeTvKeysCB.Checked;
 
-                startOver = startOverCB.Checked;
-                if (xmlPathTB.Text.Equals("") && tinyPngCompressionCB.Checked)
-                {
-                    CompressPic();
-                    return;
-                }
+            
+            startOver = startOverCB.Checked;
+            if (xmlPathTB.Text.Equals("") && tinyPngCompressionCB.Checked)
+            {
+                picCompressor.SetApiKey(apiKeyTB.Text);
+                CompressPic(file1300Path);
+                return;
+            }
 
-                if (validationCB.SelectedItem != null)
-                    validationBtnName = validationCB.SelectedItem.ToString();
-                SetTvBtnsDict();
-                initiator.RunPath(xmlPathStr, path1300);
-                
-    
+            if (validationCB.SelectedItem != null)
+                validationBtnName = validationCB.SelectedItem.ToString();
+            SetTvBtnsDict();
+            initiator.RunPath(xmlPathStr, path1300);
         }
 
+        private void label5_Click(object sender, EventArgs e)
+        {
 
+        }
+
+        private void groupBox1_Enter(object sender, EventArgs e)
+        {
+
+        }
+
+        public void OnCompressionDone(string picPath)
+        {
+            if (picPath == file1300Path)
+            {
+                ZipCreator.CreateZip(path1300 + "\\" + parentDirName + ".zip", file1300Path, xmlPathStr);
+                MessageBox.Show("DONE!");
+                Application.Exit();
+                Environment.Exit(1);
+            }
+            if (picPath == file600Path)
+            {
+                picCompressor.CompressPic(file1300Path);
+            }
+
+
+        }
     }
 
 

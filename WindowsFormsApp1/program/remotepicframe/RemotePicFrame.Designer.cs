@@ -48,8 +48,8 @@ namespace WindowsFormsApp1.program.example
             this.remotePic.TabStop = false;
             this.remotePic.MouseDown += new System.Windows.Forms.MouseEventHandler(this.Remote_Pic_MouseDown);
             this.remotePic.MouseMove += new System.Windows.Forms.MouseEventHandler(this.Remote_Pic_MouseMove);
-            this.remotePic.MouseUp += new System.Windows.Forms.MouseEventHandler(this.Remote_Pic_MouseUp);
-            this.remotePic.Paint += new PaintEventHandler(this.Remote_Pic_Paint);
+            this.remotePic.MouseUp += this.Remote_Pic_MouseUp;
+            this.remotePic.Paint += new PaintEventHandler(this.squaresPainter.PaintSquare);
             // 
             // Form1
             // 

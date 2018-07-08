@@ -8,6 +8,7 @@ using WindowsFormsApp1.program.valuesparser;
 using WindowsFormsApp1.program.valuesparser.hooks;
 using static WindowsFormsApp1.program.valuesparser.hooks.HookEventsManager;
 using System.Xml;
+using WindowsFormsApp1.program.remotepicframe.painter;
 
 namespace WindowsFormsApp1.program.example
 {
@@ -16,31 +17,40 @@ namespace WindowsFormsApp1.program.example
         //insatances
         public IRemotePicFrameCallback remotePicFrameCallback;
         private HookEventsManager HookEventsManager;
+        private SquaresPainter squaresPainter;
 
-         
+
         //params
         private int xStart, yStart, xEnd, yEnd, height, width;
 
-        
+
         public RemotePicFrame(IRemotePicFrameCallback remotePicFrameCallback)
         {
             this.remotePicFrameCallback = remotePicFrameCallback;
             this.HookEventsManager = new HookEventsManager();
-
+            this.squaresPainter = new SquaresPainter(this);
             SetStyle(ControlStyles.AllPaintingInWmPaint | ControlStyles.UserPaint | ControlStyles.OptimizedDoubleBuffer | ControlStyles.ResizeRedraw, true);
 
-            this.rectanglesList = new List<Rectangle>();
+            this.RectanglesList = new List<Rectangle>();
             InitializeComponent();
             this.DoubleBuffered = true;
         }
 
-        Rectangle mRect;
-        private List<Rectangle> rectanglesList;
+        // Rectangle mRect;
 
-        private Color SQUARE_COLOR = Color.HotPink;
+        public List<Rectangle> RectanglesList { get; }
+
+        public bool DrawNewRect { get; private set; } = false;
+
+
         private void Remote_Pic_MouseDown(object sender, MouseEventArgs e)
         {
-            mRect = new Rectangle(e.X, e.Y, 0, 0);
+            //will remove the last drawn rectangle if didn't get any indication that it approved
+            if (!DrawNewRect && RectanglesList.Count != 0)
+                ClearLastRect();
+
+            DrawNewRect = false;
+            RectanglesList.Add(new Rectangle(e.X, e.Y, 0, 0));
             xStart = e.Location.X;
             yStart = e.Location.Y;
             this.Invalidate();
@@ -56,7 +66,8 @@ namespace WindowsFormsApp1.program.example
         {
             if (e.Button == MouseButtons.Left)
             {
-                mRect = new Rectangle(mRect.Left, mRect.Top, e.X - mRect.Left, e.Y - mRect.Top);
+                var lastRect = RectanglesList[RectanglesList.Count - 1];
+                RectanglesList[RectanglesList.Count - 1] = new Rectangle(lastRect.Left, lastRect.Top, e.X - lastRect.Left, e.Y - lastRect.Top);
                 this.Invalidate();
                 remotePic.Invalidate();
             }
@@ -64,23 +75,11 @@ namespace WindowsFormsApp1.program.example
             Text = e.Location.X + ":" + e.Location.Y;
         }
 
-       
+
         protected override void OnPaint(PaintEventArgs e)
         {
-            Remote_Pic_Paint(null, e);
+            squaresPainter.PaintSquare(null, e);
         }
-
-
-        private void Remote_Pic_Paint(object sender, PaintEventArgs e)
-        {
-
-            //Draw a rectangle with 2pixel wide line
-            using (Pen pen = new Pen(SQUARE_COLOR, 1))
-            {
-                e.Graphics.DrawRectangle(pen, mRect);
-            }
-        }
-
 
         private void Remote_Pic_MouseUp(object sender, MouseEventArgs e)
         {
@@ -91,11 +90,11 @@ namespace WindowsFormsApp1.program.example
             height = yEnd - yStart;
             Console.WriteLine("x: " + xStart + ", y: " + yStart + ", width: " + width + ", height: " + height);
 
-             if (PathForm.GetValidationBtnName() != null)
-             {
-            HookEventsManager.WaitForUserAction(this);
+            if (PathForm.GetValidationBtnName() != null)
+            {
+                HookEventsManager.WaitForUserAction(this);
             }
-        
+
             else OnBtnValidated();
         }
 
@@ -112,6 +111,13 @@ namespace WindowsFormsApp1.program.example
                yStart.ToString(),
                width.ToString(),
                height.ToString()));
+
+            //if the rectangle is legal, mouse has the permission to make a new rectangle
+
+            DrawNewRect = true;
+            Invalidate();
+            remotePic.Invalidate();
+
         }
 
         public void OnBtnUndo()
@@ -132,10 +138,23 @@ namespace WindowsFormsApp1.program.example
 
 
         public interface IRemotePicFrameCallback
-        { 
+        {
             void OnBtnMarked(RectNodeObj rectObj);
             void OnBtnUndo();
         }
 
+        public void ClearLastRect()
+        {
+            if (RectanglesList.Count == 0) return;
+            RectanglesList.RemoveAt(RectanglesList.Count - 1);
+            remotePic.Invalidate();
+            this.Invalidate();
+        }
+
+        public void OnDone()
+        {
+            this.remotePic.MouseUp -= Remote_Pic_MouseUp;
+            HookEventsManager.OnDone();
+        }
     }
 }
