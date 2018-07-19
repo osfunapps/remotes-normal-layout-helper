@@ -49,7 +49,7 @@ namespace LayoutProject.program
 
         private void IniRemotePic(XmlDocument xmlDocument)
         {
-            remotePicFrame.GetRemotePic().ImageLocation = PathForm.getRemotePicPath();
+            remotePicFrame.GetRemotePic().ImageLocation = PathForm.file1300Path;
 
             Task t = Task.Run(() =>
             {

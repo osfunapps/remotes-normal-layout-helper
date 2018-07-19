@@ -34,7 +34,7 @@ namespace LayoutProject
         //strings
         private string path1300;
         private string parentDirName;
-        private string file1300Path;
+        public static string file1300Path;
         private string file600Path;
 
         public PathForm()
@@ -221,8 +221,8 @@ namespace LayoutProject
             var path1300 = parentDir + "\\1300";
             file1300Path = parentDir + "\\1300" + "\\remote.png";
             var path600 = parentDir + "\\600";
-            file600Path = path600 + "\\" + parentDirName + ".png";
             parentDirName = parentDir.Substring(parentDir.LastIndexOf("\\"));
+            file600Path = path600 + "\\" + parentDirName + ".png";
             if (!Directory.Exists(path1300))
                 Directory.CreateDirectory(path1300);
             if (!Directory.Exists(path600))
@@ -274,8 +274,6 @@ namespace LayoutProject
             }
 
 
-            ZipCreator.CreateZip(path1300 + "\\" + parentDirName + ".zip", file1300Path, xmlPathStr);
-
             removeWrongTvKeys = removeTvKeysCB.Checked;
 
             
@@ -317,6 +315,11 @@ namespace LayoutProject
                 picCompressor.CompressPic(file1300Path);
             }
 
+
+        }
+
+        private void remotePathTB_TextChanged(object sender, EventArgs e)
+        {
 
         }
     }

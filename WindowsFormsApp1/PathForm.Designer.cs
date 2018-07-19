@@ -99,6 +99,7 @@ namespace LayoutProject
             this.remotePathTB.Name = "remotePathTB";
             this.remotePathTB.Size = new System.Drawing.Size(266, 20);
             this.remotePathTB.TabIndex = 3;
+            this.remotePathTB.TextChanged += new System.EventHandler(this.remotePathTB_TextChanged);
             this.remotePathTB.DragDrop += new System.Windows.Forms.DragEventHandler(this.RemotePathDropHandler);
             this.remotePathTB.DragEnter += new System.Windows.Forms.DragEventHandler(this.DragEnterHandler);
             // 
