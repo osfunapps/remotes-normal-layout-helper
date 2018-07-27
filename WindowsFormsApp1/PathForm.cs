@@ -16,7 +16,7 @@ using WindowsFormsApp1.Properties;
 
 namespace LayoutProject
 {
-    public partial class PathForm : Form, InitiatorCallBack, IPicCompressor
+    public partial class PathForm : Form, InitiatorCallBack, IPicCompressor, IXmlCleanerCallback
     {
 
         //instances
@@ -36,6 +36,8 @@ namespace LayoutProject
         private string parentDirName;
         public static string file1300Path;
         private string file600Path;
+        private XMLCleaner cleaner;
+        private BackupHandler backupHandler;
 
         public PathForm()
         {
@@ -43,7 +45,6 @@ namespace LayoutProject
             InitializeComponent();
             setValidationCBItems();
             loadPreviousParams();
-
         }
 
         private void loadPreviousParams()
@@ -67,6 +68,8 @@ namespace LayoutProject
         {
             initiator = new Initiator(this);
             picCompressor = new PicCompressor(this);
+            cleaner = new XMLCleaner(this);
+            backupHandler = new BackupHandler();
 
         }
 
@@ -246,12 +249,10 @@ namespace LayoutProject
         private void Go_Click(object sender, EventArgs e)
         {
 
-
-
             xmlPathStr = xmlPathTB.Text;
             remotePicPath = remotePathTB.Text;
             SaveParams();
-
+            backupHandler.CreateBackup(xmlPathStr);
             var parentDir = remotePicPath.Substring(0, remotePicPath.LastIndexOf("\\"));
 
             //create new logos and pictures here!
@@ -306,9 +307,9 @@ namespace LayoutProject
             if (picPath == file1300Path)
             {
                 ZipCreator.CreateZip(path1300 + "\\" + parentDirName + ".zip", file1300Path, xmlPathStr);
-                MessageBox.Show("DONE!");
-                Application.Exit();
-                Environment.Exit(1);
+                NormalizeRemoteAndExit();
+                OnXmlCleaned();
+                return;
             }
             if (picPath == file600Path)
             {
@@ -318,9 +319,21 @@ namespace LayoutProject
 
         }
 
+        private void NormalizeRemoteAndExit()
+        {
+            cleaner.NormalizeRemoteParams(xmlPathStr);
+        }
+
         private void remotePathTB_TextChanged(object sender, EventArgs e)
         {
 
+        }
+
+        public void OnXmlCleaned()
+        {
+            MessageBox.Show("DONE!");
+            Application.Exit();
+            Environment.Exit(1);
         }
     }
 

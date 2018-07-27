@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Xml;
 using System.Xml.Linq;
@@ -35,8 +36,9 @@ namespace LayoutProject.program
         private string NODE_VOL_UP = "device_vol+";
         private string NODE_VOL_DOWN = "device_vol-";
         private string NODE_VOL_MUTE = "device_mute";
+        public static string ATT_TYPE = "type";
 
-        internal void PrepareXML(Initiator initiator, XmlDocument xmlDocument, string[] xmlNodesNamesList)
+        internal void PrepareXML(Initiator initiator, XmlDocument xmlDocument, List<string> xmlNodesNamesList)
         {
             this.xmlPreparerCallback = initiator;
             CheckIfLegal(xmlDocument);
@@ -75,9 +77,9 @@ namespace LayoutProject.program
             return layoutElement;
         }
 
-        private void SetRectElementsTags(XmlDocument xmlDocument, XmlElement layoutElement, string[] xmlNodesNamesList)
+        private void SetRectElementsTags(XmlDocument xmlDocument, XmlElement layoutElement, List<string> xmlNodesNamesList)
         {
-            int namesLength = xmlNodesNamesList.Length;
+            int namesLength = xmlNodesNamesList.Count;
             for (int i = 0; i < namesLength; i++)
             {
                 if (IsVolElement(xmlNodesNamesList[i])) continue;

@@ -13,7 +13,7 @@ namespace WindowsFormsApp1.program.xml
     {
         private string KEY_TV = "tv", KEY_AV = "av", KEY_VOL_UP = "vol_up", KEY_VOL_DOWN = "vol_down", KEY_MUTE = "mute";
 
-        internal String[] RemoveWrongTvKeys(XmlDocument xmlDocument)
+        internal List<String> RemoveWrongTvKeys(XmlDocument xmlDocument)
         {
             XmlNode papaKeyNode = xmlDocument.GetElementsByTagName(XMLReader.ATT_KEYS)[0];
             int papaChildsCount = papaKeyNode.ChildNodes.Count;
@@ -46,7 +46,7 @@ namespace WindowsFormsApp1.program.xml
             }
 
             xmlDocument.Save(PathForm.GetXmlPath());
-            return keyNames.ToArray();
+            return keyNames;
         }
     }
 }

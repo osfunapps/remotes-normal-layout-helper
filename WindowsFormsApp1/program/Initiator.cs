@@ -31,7 +31,7 @@ namespace LayoutProject.program
             xmlReader.ReadXMLPath(xmlPath);
         }
 
-        public void OnReadEnd(XmlDocument xmlDocument, string[] xmlNodesNamesList)
+        public void OnReadEnd(XmlDocument xmlDocument, List<string> xmlNodesNamesList)
         {
             xmlPreparer.PrepareXML(this, xmlDocument, xmlNodesNamesList);
         }

@@ -17,6 +17,8 @@ namespace LayoutProject.program
         //finals
         public static string ATT_KEYS = "keys";
 
+        private string SCREEN_ELEMENT = "screen_element";
+
         public XMLReader(Initiator initiator)
         {
             this.xmlReaderCallback = initiator;
@@ -25,7 +27,7 @@ namespace LayoutProject.program
         internal void ReadXMLPath(string xmlPath)
         {
             XmlDocument xmlDocument = LoadXmlPath(xmlPath);
-            String[] xmlNodesNamesList;
+            List<String> xmlNodesNamesList;
             if (PathForm.RemoveWrongTvKeys)
                 xmlNodesNamesList = new TvWrongKeysMaster().RemoveWrongTvKeys(xmlDocument);
             else
@@ -37,30 +39,30 @@ namespace LayoutProject.program
         private XmlDocument LoadXmlPath(string xmlPath)
         {
             XmlDocument document = new XmlDocument();
-           document.Load(@xmlPath);
+            document.Load(@xmlPath);
             return document;
         }
 
-        private string[] GetXmlNodesNamesList(XmlDocument document)
+        private List<String> GetXmlNodesNamesList(XmlDocument document)
         {
             XmlNodeList keysNodesList = document.GetElementsByTagName(ATT_KEYS)[0].ChildNodes;
             int keysNodesCount = keysNodesList.Count;
-            String[] namesList = new String[keysNodesCount];
+            List<String> namesList = new List<string>();
 
-            for (int i = 0; i < keysNodesCount; i++)
+            foreach (XmlNode node in keysNodesList)
             {
-                namesList[i] = keysNodesList[i].Attributes[XMLPreparer.ATT_NAME].Value;
+                if (node.Attributes[XMLPreparer.ATT_TYPE].Value.Contains(SCREEN_ELEMENT))
+                {
+                    namesList.Add(node.Attributes[XMLPreparer.ATT_NAME].Value);
+                }
             }
-
             return namesList;
         }
-
-
     }
 
     internal interface XMLReaderCallback
     {
-        void OnReadEnd(XmlDocument xmlDocument, string[] xmlNodesNamesList);
+        void OnReadEnd(XmlDocument xmlDocument, List<string> xmlNodesNamesList);
     }
 
 }

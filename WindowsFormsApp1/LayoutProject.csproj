@@ -148,6 +148,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BackupHandler.cs" />
     <Compile Include="program\tools\picturestools\PicCompressor.cs" />
     <Compile Include="program\remotepicframe\painter\SquaresPainter.cs" />
     <Compile Include="program\tools\picturestools\PicResizer.cs" />
@@ -185,8 +186,10 @@
     <Compile Include="program\xml\XMLPreparer.cs" />
     <Compile Include="program\valuesparser\UserActivityHook.cs" />
     <Compile Include="program\xml\XMLReader.cs" />
+    <Compile Include="program\xml\XMLTypes.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="program\tools\ZipCreator.cs" />
+    <Compile Include="XMLCleaner.cs" />
     <EmbeddedResource Include="PathForm.resx">
       <DependentUpon>PathForm.cs</DependentUpon>
       <SubType>Designer</SubType>
