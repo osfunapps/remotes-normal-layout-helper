@@ -12,7 +12,8 @@ namespace LayoutProject
             var suffix = originalName.Substring(originalName.IndexOf("."));
             var backupName = originalName.Substring(0, originalName.IndexOf(".")) + " " + BACKUP + suffix;
             var parentDir = Directory.GetParent(xmlPathStr);
-            File.Copy(xmlPathStr, parentDir + "\\" + backupName);
+            var backupPath = parentDir + "\\" + backupName;
+            File.Copy(xmlPathStr, backupPath,true);
         }
     }
 }

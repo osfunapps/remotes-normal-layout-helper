@@ -16,5 +16,6 @@ namespace WindowsFormsApp1.program.xml
         public static string KEYS= "keys";
         public static string TYPE = "type";
         public static string PROPS = "props";
+        public static string REMOTE = "remote";
     }
 }

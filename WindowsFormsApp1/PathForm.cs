@@ -306,8 +306,8 @@ namespace LayoutProject
         {
             if (picPath == file1300Path)
             {
-                ZipCreator.CreateZip(path1300 + "\\" + parentDirName + ".zip", file1300Path, xmlPathStr);
                 NormalizeRemoteAndExit();
+                ZipCreator.CreateZip(path1300 + "\\" + parentDirName + ".zip", file1300Path, xmlPathStr);
                 OnXmlCleaned();
                 return;
             }

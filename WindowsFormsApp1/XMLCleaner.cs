@@ -1,4 +1,6 @@
-﻿using System.Xml;
+﻿using System.Linq;
+using System.Text.RegularExpressions;
+using System.Xml;
 using WindowsFormsApp1.program.xml;
 
 namespace LayoutProject
@@ -26,15 +28,35 @@ namespace LayoutProject
                 {
                     continue;
                 }
+                if (keyNodeList[i].Attributes[XMLTypes.TYPE].Value.Contains(XMLTypes.SCREEN_ELEMENT))
+                    keyNodeList[i].Attributes[XMLTypes.TYPE].Value = StripScreenElementType(keyNodeList[i]);
                 keyNodeList[i].Attributes[XMLTypes.TYPE].Value = XMLTypes.HEX;
                 keyNodesParent.AppendChild(keyNodeList[i]);
             }
 
-            XmlNode props = document.GetElementsByTagName(XMLTypes.PROPS)[0];
-            document.RemoveChild(props);
+
+
+            RemovePropsTag(document);
+
             document.Save(xmlPathStr);
             callback.OnXmlCleaned();
-            
+
+        }
+
+        private string StripScreenElementType(XmlNode keyNode)
+        {
+            var types = keyNode.Attributes[XMLTypes.TYPE].Value;
+            var newTypes = Regex.Replace(types, XMLTypes.SCREEN_ELEMENT, "");
+            if (newTypes.Count(x => x == '|') == 1)
+                newTypes = newTypes.Replace("|", "");
+            return newTypes;
+        }
+
+        private void RemovePropsTag(XmlDocument document)
+        {
+            XmlNode remote = document.GetElementsByTagName(XMLTypes.REMOTE)[0];
+            XmlNode props = document.GetElementsByTagName(XMLTypes.PROPS)[0];
+            remote.RemoveChild(props);
         }
 
 
