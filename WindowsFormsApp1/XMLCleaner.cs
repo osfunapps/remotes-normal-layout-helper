@@ -31,7 +31,7 @@ namespace LayoutProject
                 if (keyNodeList[i].Attributes[XMLTypes.TYPE].Value.Contains(XMLTypes.SCREEN_ELEMENT))
                     keyNodeList[i].Attributes[XMLTypes.TYPE].Value = StripScreenElementType(keyNodeList[i]);
                 keyNodeList[i].Attributes[XMLTypes.TYPE].Value = XMLTypes.HEX;
-                keyNodesParent.AppendChild(keyNodeList[i]);
+                keyNodesParent.AppendChild(keyNodeList[i].CloneNode(true));
             }
 
 
