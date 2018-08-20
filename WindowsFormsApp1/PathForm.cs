@@ -222,10 +222,10 @@ namespace LayoutProject
         {
 
             var path1300 = parentDir + "\\1300";
-            file1300Path = parentDir + "\\1300" + "\\remote.png";
             var path600 = parentDir + "\\600";
             parentDirName = parentDir.Substring(parentDir.LastIndexOf("\\"));
-            file600Path = path600 + "\\" + parentDirName + ".png";
+            file600Path = path600 + parentDirName + ".png";
+            file1300Path = path1300 + parentDirName + ".png";
             if (!Directory.Exists(path1300))
                 Directory.CreateDirectory(path1300);
             if (!Directory.Exists(path600))
