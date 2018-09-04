@@ -23,7 +23,14 @@ namespace WindowsFormsApp1.program.tools.picturestools
         public async Task CompressPic(string picPath)
         {
             var source = Tinify.FromFile(picPath);
-            await source.ToFile(picPath);
+            try
+            {
+                await source.ToFile(picPath);
+            }
+            catch (System.Exception e)
+            {
+                Console.WriteLine(e);
+            }
             _callback.OnCompressionDone(picPath);
         }
     }

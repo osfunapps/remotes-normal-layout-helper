@@ -222,19 +222,25 @@ namespace LayoutProject
         {
 
             var path1300 = parentDir + "\\1300";
+            file1300Path = "C:\\Users\\shabat\\Google Drive\\new remotes\\new remotes (28.8.18)\\vizio\\tv_vizio_14_h\\viz\\1300\\remote.png";
+            //file1300Path = parentDir + "\\1300" + "\\remote.png";
             var path600 = parentDir + "\\600";
             parentDirName = parentDir.Substring(parentDir.LastIndexOf("\\"));
-            file600Path = path600 + parentDirName + ".png";
-            file1300Path = path1300 + parentDirName + ".png";
-            if (!Directory.Exists(path1300))
+            file600Path =
+                "C:\\Users\\shabat\\Google Drive\\new remotes\\new remotes (28.8.18)\\vizio\\tv_vizio_14_h\\viz\\600\\remote.png";
+            return path1300;
+            /*if (!Directory.Exists(path1300))
                 Directory.CreateDirectory(path1300);
             if (!Directory.Exists(path600))
                 Directory.CreateDirectory(path600);
+            
             var remote1300Success = PicResizer.ResizeImage(0, 1300, file1300Path, remotePicPath);
             var remote600Success = PicResizer.ResizeImage(0, 600, file600Path, remotePicPath);
             if (remote1300Success && remote600Success)
                 return path1300;
             return null;
+
+    */
         }
 
 
@@ -266,12 +272,12 @@ namespace LayoutProject
                     return;
                 }
 
-                var logoCreated = CreateLogo(parentDir);
+                /*var logoCreated = CreateLogo(parentDir);
                 if (!logoCreated)
                 {
                     MessageBox.Show("couldn't create logo! exiting...");
                     return;
-                }
+                }*/
             }
 
 

@@ -46,10 +46,10 @@ namespace LayoutProject
             using (var graphics = Graphics.FromImage(destImage))
             {
                 graphics.CompositingMode = CompositingMode.SourceCopy;
-                graphics.CompositingQuality = CompositingQuality.HighQuality;
-                graphics.InterpolationMode = InterpolationMode.HighQualityBicubic;
-                graphics.SmoothingMode = SmoothingMode.HighQuality;
-                graphics.PixelOffsetMode = PixelOffsetMode.HighQuality;
+                graphics.CompositingQuality = CompositingQuality.AssumeLinear;
+                graphics.InterpolationMode = InterpolationMode.Bicubic;
+                graphics.SmoothingMode = SmoothingMode.None;
+                graphics.PixelOffsetMode = PixelOffsetMode.None;
 
                 using (var wrapMode = new ImageAttributes())
                 {
