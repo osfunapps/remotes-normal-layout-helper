@@ -7,7 +7,14 @@ namespace LayoutProject
         internal static string GetTxt()
         {
             return
-                "version 2.0" +
+                "version 2.5" +
+                "\n- added the ability to place a list of remotes" +
+                "\n- added the ability to change the back button" +
+                "\n- tiny png fixed. Went back to python :( " +
+                "\n- added error notificaitons about verious errors" +
+                "\n- now can make tiny png to single image:" +
+                "\njust place the path to the image, check the Only tinyPNG check box and click Go!" +
+                "\n\nversion 2.0" +
                 "\n- added back button in [`]" +
                 "\n- rectangles now stays" +
                 "\n- program now makes logos" +
