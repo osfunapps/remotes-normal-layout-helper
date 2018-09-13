@@ -10,6 +10,7 @@ using System.Xml;
 using WindowsFormsApp1.program.example;
 using static WindowsFormsApp1.program.example.RemotePicFrame;
 using WindowsFormsApp1.program.valuesparser;
+using WindowsFormsApp1.program.valuesparser.hooks;
 
 namespace LayoutProject.program
 {
@@ -31,6 +32,8 @@ namespace LayoutProject.program
         private int nodesIndexer;
         private XmlAttribute missingAttName;
         private RemotePicFrame remotePicFrame;
+        private Task t;
+        private RemoteDimensHandler remoteDimensHandler;
 
         public ValuesWriter(Initiator initiator)
         {
@@ -41,8 +44,10 @@ namespace LayoutProject.program
         internal void IniWriteValues(XmlDocument xmlDocument)
         {
             SetParams(xmlDocument);
+            if(mouseCoordinator == null)
             this.mouseCoordinator = new MouseCoordinator();
             mouseCoordinator.ShowDialog();
+            //mouseCoordinator.AttachFloatingMouseForm();
             IniRemotePic(xmlDocument);
             CheckNextVal();
         }
@@ -51,9 +56,10 @@ namespace LayoutProject.program
         {
             remotePicFrame.GetRemotePic().ImageLocation = PathForm.file1300Path;
 
-            Task t = Task.Run(() =>
+            t = Task.Run(() =>
             {
-                remotePicFrame.ShowDialog();
+                if(!remotePicFrame.Visible)
+                    remotePicFrame.ShowDialog();
             });
         }
 
@@ -65,6 +71,7 @@ namespace LayoutProject.program
             this.rectNodesCount = layoutElement.ChildNodes.Count;
             this.nodesIndexer = 0;
             this.currentRectNode = rectNodesList[nodesIndexer];
+            this.remoteDimensHandler = new RemoteDimensHandler();
         }
 
         private void CheckNextVal()
@@ -89,7 +96,8 @@ namespace LayoutProject.program
             if (LastElement())
             {
                 remotePicFrame.OnDone();
-                new RemoteDimensHandler().SetRemoteDimens(xmlDocument, remotePicFrame.GetRemotePic());
+
+                remoteDimensHandler.SetRemoteDimens(xmlDocument, remotePicFrame.GetRemotePic());
                 valuesWriterCallback.OnWritingEnd(xmlDocument);
                 return;
             }
@@ -142,6 +150,15 @@ namespace LayoutProject.program
             }
             remotePicFrame.ClearLastRect();
             CheckNextVal();
+        }
+
+        
+        public void KillPreviousCycleElements()
+        {
+            mouseCoordinator.DetachFloatingMouseForm();
+            remotePicFrame.Kill();
+            t = null;
+            HookEventsManager.KillWatchers();
         }
     }
 

@@ -62,12 +62,12 @@ namespace WindowsFormsApp1.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string xmlPath {
+        public string remotesPath {
             get {
-                return ((string)(this["xmlPath"]));
+                return ((string)(this["remotesPath"]));
             }
             set {
-                this["xmlPath"] = value;
+                this["remotesPath"] = value;
             }
         }
         
@@ -176,6 +176,18 @@ namespace WindowsFormsApp1.Properties {
             }
             set {
                 this["tinyPng"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string undoBtn {
+            get {
+                return ((string)(this["undoBtn"]));
+            }
+            set {
+                this["undoBtn"] = value;
             }
         }
     }

@@ -13,7 +13,6 @@ namespace WindowsFormsApp1.program.valuesparser.hooks
     {
         private bool validated = false;
         private bool undoed = false;
-        private string UNDO = "Oem3";
 
         public void WaitForUserAction(IUserActionCallback userAcitonCallback)
         {
@@ -30,7 +29,7 @@ namespace WindowsFormsApp1.program.valuesparser.hooks
             KeyboardWatcher.OnKeyInput += (s, e) =>
             {
                 Console.WriteLine("btn name: "+ e.KeyData.Keyname);
-                if (e.KeyData.Keyname.Equals(UNDO) && !undoed) 
+                if (e.KeyData.Keyname.Equals(PathForm.GetUndoBtnName()) && !undoed) 
                     Undo(userAcitonCallback);
                 
 
@@ -39,6 +38,12 @@ namespace WindowsFormsApp1.program.valuesparser.hooks
             };
         }
 
+        public static void KillWatchers()
+        {
+            KeyboardWatcher.Stop();
+            MouseWatcher.Stop();
+
+        }
         private void Undo(IUserActionCallback userAcitonCallback)
         {
             undoed = true;

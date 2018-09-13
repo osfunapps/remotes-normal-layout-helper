@@ -1,4 +1,6 @@
 ﻿using System.IO;
+using System.Windows.Forms;
+using WindowsFormsApp1.program.tools;
 
 namespace LayoutProject
 {
@@ -6,14 +8,16 @@ namespace LayoutProject
     {
         private string BACKUP = "backup";
 
-        public void CreateBackup(string xmlPathStr)
+        public void CreateBackup(string appDirPath)
         {
-            var originalName = Path.GetFileName(xmlPathStr);
-            var suffix = originalName.Substring(originalName.IndexOf("."));
-            var backupName = originalName.Substring(0, originalName.IndexOf(".")) + " " + BACKUP + suffix;
-            var parentDir = Directory.GetParent(xmlPathStr);
-            var backupPath = parentDir + "\\" + backupName;
-            File.Copy(xmlPathStr, backupPath,true);
+            var configFilePath = appDirPath + Finals.PATH_ORIGINAL_CONFIG_FILE;
+            if (!File.Exists(configFilePath))
+            {
+                MessageBox.Show(Finals.ERR_NO_CONFIG_FILE);
+                return;
+            }
+            var backupPath = configFilePath.Substring(0, configFilePath.IndexOf(".")) + " " + BACKUP + ".xml";
+            File.Copy(configFilePath, backupPath, true);
         }
     }
 }

@@ -2,6 +2,7 @@
 using System.Diagnostics;
 using System.IO;
 using System.Windows.Forms;
+using WindowsFormsApp1.program.tools.picturestools;
 using WindowsFormsApp1.Properties;
 
 namespace LayoutProject
@@ -10,26 +11,33 @@ namespace LayoutProject
     {
 
 
+
         private string pythonScript = "\"" + Directory.GetCurrentDirectory() + "\\" + "TinyPngExe.py\"";
         private string COMPRESS_SUFIX = "_compressed";
+        private string apiKey;
+        private string pythonPath;
+        private IPicCompressor callback;
 
-        public void compressPic(string pythonPath, string apiKey, string picInput)
+
+        public PythonPicCompressor(IPicCompressor callback)
         {
-
-            apiKey = FormatString(apiKey);
-            picInput = FormatString(picInput);
-            //string picOutput = picInput.Insert(picInput.LastIndexOf("."), COMPRESS_SUFIX);
-
-            RunCmd(pythonPath, pythonScript, apiKey + picInput + picInput);
-            //RunCmd(pythonPath, PYTHON_SCRIPT, apiKey + picInput + picInput);
-
+            this.callback = callback;
         }
 
-        private static void RunCmd(string pythonPath, string cmd, string args)
+
+        public void CompressPic(string picInput)
         {
+            RunCmd(pythonScript, picInput);
+        }
+
+        private void RunCmd(string cmd, string picInput)
+        {
+            var formattedPicPath = FormatString(picInput);
+
+
             ProcessStartInfo start = new ProcessStartInfo();
             start.FileName = pythonPath;
-            start.Arguments = cmd + args;
+            start.Arguments = cmd + apiKey + formattedPicPath + formattedPicPath;
             start.UseShellExecute = false;
             start.RedirectStandardOutput = true;
             using (Process process = Process.Start(start))
@@ -38,6 +46,7 @@ namespace LayoutProject
                 {
                     string result = reader.ReadToEnd();
                     MessageBox.Show(result);
+                    callback.OnCompressionDone(picInput);
                 }
             }
         }
@@ -45,6 +54,12 @@ namespace LayoutProject
         private string FormatString(string inputStr)
         {
             return " \"" + inputStr + "\"";
+        }
+
+        public void SetParams(string pythonPath, string apiKey)
+        {
+            this.apiKey = FormatString(apiKey);
+            this.pythonPath = pythonPath;
         }
     }
 }

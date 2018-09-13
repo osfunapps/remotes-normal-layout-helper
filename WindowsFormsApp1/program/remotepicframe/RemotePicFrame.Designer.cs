@@ -46,10 +46,6 @@ namespace WindowsFormsApp1.program.example
             this.remotePic.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
             this.remotePic.TabIndex = 2;
             this.remotePic.TabStop = false;
-            this.remotePic.MouseDown += new System.Windows.Forms.MouseEventHandler(this.Remote_Pic_MouseDown);
-            this.remotePic.MouseMove += new System.Windows.Forms.MouseEventHandler(this.Remote_Pic_MouseMove);
-            this.remotePic.MouseUp += this.Remote_Pic_MouseUp;
-            this.remotePic.Paint += new PaintEventHandler(this.squaresPainter.PaintSquare);
             // 
             // Form1
             // 
@@ -64,7 +60,6 @@ namespace WindowsFormsApp1.program.example
             ((System.ComponentModel.ISupportInitialize)(this.remotePic)).EndInit();
             this.ResumeLayout(false);
             this.TopMost = false;
-            this.FormClosing += new FormClosingEventHandler(this.onFormClosing);
             this.Shown += new EventHandler(this.FormShown);
             this.PerformLayout();
              

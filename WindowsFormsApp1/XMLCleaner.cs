@@ -56,7 +56,8 @@ namespace LayoutProject
         {
             XmlNode remote = document.GetElementsByTagName(XMLTypes.REMOTE)[0];
             XmlNode props = document.GetElementsByTagName(XMLTypes.PROPS)[0];
-            remote.RemoveChild(props);
+            if(props!=null)
+                remote.RemoveChild(props);
         }
 
 

@@ -11,7 +11,7 @@
     <Setting Name="remotePath" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
-    <Setting Name="xmlPath" Type="System.String" Scope="User">
+    <Setting Name="remotesPath" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
     <Setting Name="tvBtn" Type="System.Boolean" Scope="User">
@@ -40,6 +40,9 @@
     </Setting>
     <Setting Name="tinyPng" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="undoBtn" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
     </Setting>
   </Settings>
 </SettingsFile>

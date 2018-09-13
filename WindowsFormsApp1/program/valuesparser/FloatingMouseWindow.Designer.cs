@@ -19,13 +19,12 @@ namespace WindowsFormsApp1.program.valuesparser
         /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
         protected override void Dispose(bool disposing)
         {
-            actHook = new UserActivityHook(); // crate an instance
+            //actHook = new UserActivityHook(); // crate an instance
             if (disposing && (components != null))
             {
                 components.Dispose();
             }
             base.Dispose(disposing);
-
 
         }
 
@@ -67,7 +66,7 @@ namespace WindowsFormsApp1.program.valuesparser
             this.TopMost = true;
             this.PerformLayout();
             this.Load += new EventHandler(FrameLoad);
-            
+
 
             //transperent color
             this.BackColor = System.Drawing.Color.LightCoral;
@@ -77,10 +76,11 @@ namespace WindowsFormsApp1.program.valuesparser
 
         private void FrameLoad(object sender, EventArgs e)
         {
-            actHook = new UserActivityHook(); // crate an instance
-
-            // hang on events
-            actHook.OnMouseActivity += new MouseEventHandler(MouseMoved);
+            if (actHook == null)
+            {
+                actHook = new UserActivityHook(); // crate an instance
+                actHook.OnMouseActivity += new MouseEventHandler(MouseMoved);
+            }
         }
 
         private int Y_FRAME_POSITION_OFFSET = 40;
@@ -111,14 +111,55 @@ namespace WindowsFormsApp1.program.valuesparser
             try
             {
                 this.mouseTxtLabel.Text = value;
-            }catch(Exception e)
+            }
+            catch (Exception e)
             {
                 e.Message.ToString();
             }
         }
 
+        public void Detach()
+        {
+
+            if (InvokeRequired)
+            {
+                this.Invoke(new Action(Detach), new object[] { });
+                return;
+            }
+
+            try
+            {
+                actHook.OnMouseActivity -= new MouseEventHandler(MouseMoved);
+            }
+            catch (Exception e)
+            {
+                e.Message.ToString();
+            }
+        }
+
+
+        public void Attach()
+        {
+
+            if (InvokeRequired)
+            {
+                this.Invoke(new Action(Attach), new object[] { });
+                return;
+            }
+
+            try
+            {
+                actHook.OnMouseActivity += new MouseEventHandler(MouseMoved);
+            }
+            catch (Exception e)
+            {
+                e.Message.ToString();
+            }
+        }
+
+
     }
 
-  
+
 
 }

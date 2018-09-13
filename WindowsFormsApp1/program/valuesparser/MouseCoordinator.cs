@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using WindowsFormsApp1.program.tools;
 using WindowsFormsApp1.program.valuesparser;
 
 namespace LayoutProject.program.values
@@ -13,11 +14,24 @@ namespace LayoutProject.program.values
     {
         //instances
         private FloatingMouseWindow floatingMouseWindowForm;
+        private Task t;
 
         public MouseCoordinator()
         {
             floatingMouseWindowForm = new FloatingMouseWindow();
             floatingMouseWindowForm.TopMost = true;
+        }
+
+        public void DetachFloatingMouseForm()
+        {
+            ShowMouseNotification("");
+            //floatingMouseWindowForm.Detach();
+        }
+
+
+        public void AttachFloatingMouseForm()
+        {
+            floatingMouseWindowForm.Attach();
         }
 
 
@@ -28,10 +42,13 @@ namespace LayoutProject.program.values
 
         public void ShowDialog()
         {
-            Task t = Task.Run(() => {
+            if (t != null) return;
+            t = Task.Run(() => {
+                floatingMouseWindowForm.prepareParams();
+                AttachFloatingMouseForm();
                 floatingMouseWindowForm.ShowDialog();
             });
-            
+
         }
 
         public FloatingMouseWindow GetFloatingMouseWindowForm()

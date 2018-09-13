@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Xml;
+using WindowsFormsApp1.program.tools;
 
 namespace LayoutProject.program
 {
@@ -26,9 +27,9 @@ namespace LayoutProject.program
             valuesWriter = new ValuesWriter(this);
         }
 
-        internal void RunPath(string xmlPath, string remotePath)
+        internal void RunPath(string appPathStr, string remotePath)
         {
-            xmlReader.ReadXMLPath(xmlPath);
+            xmlReader.ReadXMLPath(appPathStr + Finals.PATH_ORIGINAL_CONFIG_FILE);
         }
 
         public void OnReadEnd(XmlDocument xmlDocument, List<string> xmlNodesNamesList)
@@ -44,15 +45,19 @@ namespace LayoutProject.program
         public void OnWritingEnd(XmlDocument xmlDocument)
         {
             xmlDocument.Save(PathForm.GetXmlPath());
-            callBack.onFileMade();
+            callBack.OnFileMade();
         }
 
 
+        public void KillPreviousCycleElements()
+        {
+            valuesWriter.KillPreviousCycleElements();
+        }
     }
 
     public interface InitiatorCallBack
     {
-        void onFileMade();
+        void OnFileMade();
     }
 
 }

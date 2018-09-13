@@ -117,7 +117,6 @@ namespace WindowsFormsApp1.program.example
             DrawNewRect = true;
             Invalidate();
             remotePic.Invalidate();
-
         }
 
         public void OnBtnUndo()
@@ -128,14 +127,11 @@ namespace WindowsFormsApp1.program.example
 
         private void FormShown(object sender, EventArgs e)
         {
+            this.remotePic.MouseDown += new System.Windows.Forms.MouseEventHandler(this.Remote_Pic_MouseDown);
+            this.remotePic.MouseMove += new System.Windows.Forms.MouseEventHandler(this.Remote_Pic_MouseMove);
+            this.remotePic.MouseUp += this.Remote_Pic_MouseUp;
+            this.remotePic.Paint += new PaintEventHandler(this.squaresPainter.PaintSquare);
         }
-
-        private void onFormClosing(object sender, FormClosingEventArgs e)
-        {
-            Application.Exit();
-        }
-
-
 
         public interface IRemotePicFrameCallback
         {
@@ -151,10 +147,48 @@ namespace WindowsFormsApp1.program.example
             this.Invalidate();
         }
 
+        private void ClearAllRect()
+        {
+            if (RectanglesList == null || RectanglesList.Count == 0) return;
+            RectanglesList.Clear();
+            remotePic.Invalidate();
+            this.Invalidate();
+        }
+
+
         public void OnDone()
         {
             this.remotePic.MouseUp -= Remote_Pic_MouseUp;
             HookEventsManager.OnDone();
         }
+
+
+        public void Kill()
+        {
+            if (InvokeRequired)
+            {
+
+                this.Invoke(new Action(Kill), new object[] { });
+                return;
+            }
+
+            try
+            {
+                this.remotePic.MouseDown -= new System.Windows.Forms.MouseEventHandler(this.Remote_Pic_MouseDown);
+                this.remotePic.MouseMove -= new System.Windows.Forms.MouseEventHandler(this.Remote_Pic_MouseMove);
+                this.remotePic.MouseUp -= this.Remote_Pic_MouseUp;
+                this.remotePic.Paint -= new PaintEventHandler(this.squaresPainter.PaintSquare);
+
+                ClearAllRect();
+                Close();
+
+            }
+            catch (Exception e)
+            {
+                e.Message.ToString();
+            }
+
+        }
+
     }
 }

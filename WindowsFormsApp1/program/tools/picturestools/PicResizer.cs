@@ -18,16 +18,16 @@ namespace LayoutProject
 
         /// <summary>
         /// Resize the image to the specified desiredWidth and desiredHeight.
-        /// You can either set image or put a path to an image.
+        /// You can either set image or put a imputImgPath to an image.
         /// </summary>
         /// <param name="image">Optional: the image to resize.</param>
         /// <param name="desiredWidth">The desiredWidth to resize to. Leave as zero to keep aspect ratio of desiredHeight.</param>
         /// <param name="desiredHeight">The desiredHeight to resize to. Leave as zero to keep aspect ratio of desiredWidth.</param>
         /// <returns>The resized image.</returns>
-        public static bool ResizeImage(int desiredWidth, int desiredHeight, string outputFileName, string path ="", Image image = null)
+        public static bool ResizeImage(int desiredWidth, int desiredHeight, string outputImgPath, string imputImgPath ="", Image image = null)
         {
             if(image == null)
-                image = Image.FromFile(path);
+                image = Image.FromFile(imputImgPath);
             if (desiredWidth == 0)
             {
                 var heightMultiplier = (double) desiredHeight / (double) image.Height;
@@ -58,7 +58,7 @@ namespace LayoutProject
                 }
             }
              
-            destImage.Save(outputFileName);
+            destImage.Save(outputImgPath);
             destImage.Dispose();
             return true;
         }

@@ -137,6 +137,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BackupHandler.cs" />
+    <Compile Include="program\tools\Finals.cs" />
     <Compile Include="program\tools\picturestools\PicCompressor.cs" />
     <Compile Include="program\remotepicframe\painter\SquaresPainter.cs" />
     <Compile Include="program\tools\picturestools\PicResizer.cs" />
